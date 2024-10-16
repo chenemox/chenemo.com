@@ -6,6 +6,7 @@
     "allowJs": true,
     "paths": {
       "@*": ["./src/*"],
+      "config": ["site.config.ts"]
     }
   }
 }

@@ -1,0 +1,45 @@
+---
+import { MENU } from 'config'
+---
+
+<header class="header">
+    <a href="/">
+        Logo
+    </a>
+    <nav class="nav">
+        <ul class="menu">
+            {MENU.map(item => (
+                <li>
+                    <a href={item.url} class="link">{item.name}</a>
+                </li>
+            ))}
+        </ul>
+    </nav>
+    <div class="action">
+        <div class="i-hugeicons:search-01"></div>
+        <div class="i-hugeicons:moon-02 dark:i-hugeicons:sun-01"></div>
+    </div>
+</header>
+
+<style>
+.header {
+    --uno: "relative max-w-screen-lg w-full mx-auto mt-8 px-8 flex flex-1 justify-between items-center gap-12 h-20"
+}
+
+
+.nav {
+    --uno: "h-full"
+}
+
+.menu {
+   --uno: "flex h-full items-center gap-2"
+}
+
+.link {
+    --uno: "lh-12 px-4"
+}
+
+.action {
+    --uno: "self-stretch flex items-center ml-auto gap-3"
+}
+</style>

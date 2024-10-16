@@ -1,0 +1,21 @@
+---
+import BaseHead from '@components/BaseHead.astro'
+import Header from '@components/Header.astro'
+import type { HeadInfo } from '@types'
+import { ViewTransitions } from 'astro:transitions'
+
+type Props = HeadInfo
+
+const { ...head } = Astro.props
+---
+
+<html>
+	<head>
+        <BaseHead {...head} />
+        <ViewTransitions />
+	</head>
+	<body>
+		<Header />
+		<slot />
+	</body>
+</html>

@@ -1,0 +1,46 @@
+---
+import { SITE } from 'config'
+import type { HeadInfo } from '@types'
+
+type Props = HeadInfo
+
+const {
+  title,
+  description = SITE.description,
+  author,
+  keywords = [],
+  canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
+  ogImage,
+  ogType = 'blog',
+} = Astro.props
+
+const socialImageURL = new URL(ogImage ?? 'favicon.svg', Astro.url.origin).href
+---
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="canonical" href={canonicalURL} />
+<meta name="generator" content={Astro.generator} />
+
+<title>{title} | {SITE.title}</title>
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords.join(",").toLowerCase()} />
+<meta name="author" content={author} />
+<!-- <link rel="sitemap" href="/sitemap-index.xml" /> -->
+<!-- <link rel="alternate" type="application/rss+xml"  href="/rss.xml" /> -->
+
+
+<!-- Open Graph / Facebook -->
+<meta property="og:title" content={title || SITE.title} />
+<meta property="og:type" content={ogType} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImageURL} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content={socialImageURL ? "summary_large_image" : "summary"} />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title || SITE.title} />
+<meta property="twitter:description" content={description} />
