@@ -1,45 +1,25 @@
 ---
 import { MENU } from 'config'
+import ThemeToggle from './themeToggle.astro'
 ---
 
-<header class="header">
-    <a href="/">
-        Logo
-    </a>
-    <nav class="nav">
-        <ul class="menu">
+<header class="font-fangyuan max-w-screen-lg h-14 mt-5 px-6 mx-auto items-center flex justify-between gap-5">
+    <div class="flex-1"></div>
+    <nav class="flex justify-end md:justify-center">
+        <ul class="flex gap-12 rd-full px-10 py-4 text-xl bg-header ">
+            <li>
+                <a href="/" class="color-band">EMO</a>
+            </li>
             {MENU.map(item => (
                 <li>
-                    <a href={item.url} class="link">{item.name}</a>
+                    <a href={item.url} class="color-header">{item.name}</a>
                 </li>
             ))}
         </ul>
     </nav>
-    <div class="action">
-        <div class="i-hugeicons:search-01"></div>
-        <div class="i-hugeicons:moon-02 dark:i-hugeicons:sun-01"></div>
+    <div class="flex flex-1 md:justify-end">
+        <div class="flex items-center bg-header px-10 py-4 rd-full max-md:hidden text-xl">
+            <ThemeToggle />
+        </div>
     </div>
 </header>
-
-<style>
-.header {
-    --uno: "relative max-w-screen-lg w-full mx-auto mt-8 px-8 flex flex-1 justify-between items-center gap-12 h-20"
-}
-
-
-.nav {
-    --uno: "h-full"
-}
-
-.menu {
-   --uno: "flex h-full items-center gap-2"
-}
-
-.link {
-    --uno: "lh-12 px-4"
-}
-
-.action {
-    --uno: "self-stretch flex items-center ml-auto gap-3"
-}
-</style>

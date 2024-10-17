@@ -3,6 +3,7 @@ import BaseHead from '@components/BaseHead.astro'
 import Header from '@components/Header.astro'
 import type { HeadInfo } from '@types'
 import { ViewTransitions } from 'astro:transitions'
+import '@styles/global.css'
 
 type Props = HeadInfo
 
@@ -14,8 +15,10 @@ const { ...head } = Astro.props
         <BaseHead {...head} />
         <ViewTransitions />
 	</head>
-	<body>
+	<body class="bg-base color-base">
 		<Header />
-		<slot />
+		<main class="max-w-screen-lg mx-auto pt-20">
+			<slot />
+		</main>
 	</body>
 </html>
