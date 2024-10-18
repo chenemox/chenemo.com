@@ -1,0 +1,42 @@
+---
+
+---
+
+<button id="menuToggle" title="menu toggle" class="max-md:visible md:hidden">
+    <!-- v -->
+    <!-- <div class="i-line-md:menu"></div> -->
+    <!-- <div class="i-line-md:close hidden"></div> -->
+
+    <div
+        class="flex flex-col items-center justify-center gap-2"
+    >
+        <div
+            id="top"
+            class="w-21px h-2px bg-black dark:bg-white"
+        >
+        </div>
+        <div
+            id="bottom"
+            class="w-21px h-2px bg-black dark:bg-white"
+        >
+        </div>
+    </div>
+</button>
+
+<style>
+    #top {
+        transform: rotateZ(0deg);
+    }
+
+    #bottom {
+        transform: rotateZ(0deg);
+    }
+
+    .toggle-expanded #top {
+        transform: rotateZ(45deg) translateX(3px) translateY(4px);
+    }
+
+    .toggle-expanded #bottom {
+        transform: rotateZ(-45deg) translateX(3px) translateY(-4px);
+    }
+</style>

@@ -1,25 +1,49 @@
 ---
 import { MENU } from 'config'
-import ThemeToggle from './themeToggle.astro'
+import ThemeToggle from './ThemeToggle.astro'
+import MenuToggle from './MenuToggle.astro'
 ---
 
-<header class="font-fangyuan max-w-screen-lg h-14 mt-5 px-6 mx-auto items-center flex justify-between gap-5">
-    <div class="flex-1"></div>
+<header id="header" class="font-fangyuan accent-black w-fit h-14 mt-5 px-6 mx-auto relative flex items-center justify-between gap-14 bg-header rd-full">
+    <div class="flex-1">
+        <a href="/" class="color-band">EMO</a>
+    </div>
     <nav class="flex justify-end md:justify-center">
-        <ul class="flex gap-12 rd-full px-10 py-4 text-xl bg-header ">
-            <li>
-                <a href="/" class="color-band">EMO</a>
-            </li>
+        <ul id="navLinks" class="op-0 absolute flex flex-col bg-header gap-5 w-full pt-1 pb-5 left-0 top-[56px] rd-b-3xl md:position-unset md:flex-row md:gap-10 md:py-0 md:op-100 text-xl ">
             {MENU.map(item => (
-                <li>
-                    <a href={item.url} class="color-header">{item.name}</a>
+                <li class="text-center">
+                    <a href={item.url} title={`${item.name} link`} class="color-header">{item.name}</a>
                 </li>
             ))}
         </ul>
     </nav>
-    <div class="flex flex-1 md:justify-end">
-        <div class="flex items-center bg-header px-10 py-4 rd-full max-md:hidden text-xl">
-            <ThemeToggle />
-        </div>
+    <div class="flex flex-1 justify-end text-xl gap-2">
+        <ThemeToggle />
+        <MenuToggle />
     </div>
 </header>
+
+<script>
+    document.addEventListener("astro:page-load", () => {
+        document.querySelector("#menuToggle")?.addEventListener('click', () => {
+            document.querySelector("#menuToggle")?.classList.toggle('toggle-expanded')
+            document.querySelector("#header")?.classList.toggle('header-expanded')
+            document.querySelector("#navLinks")?.classList.toggle('expanded')
+            
+        })
+    })
+</script>
+
+<style>
+@media screen and (max-width: 768px) {
+    .header-expanded {
+        border-radius: 0%;
+        border-top-left-radius: 1.5rem; 
+        border-top-right-radius: 1.5rem; 
+    }
+}
+
+.expanded {
+    opacity: 1;
+}
+</style>
