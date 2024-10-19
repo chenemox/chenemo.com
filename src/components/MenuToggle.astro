@@ -3,10 +3,6 @@
 ---
 
 <button id="menuToggle" title="menu toggle" class="max-md:visible md:hidden">
-    <!-- v -->
-    <!-- <div class="i-line-md:menu"></div> -->
-    <!-- <div class="i-line-md:close hidden"></div> -->
-
     <div
         class="flex flex-col items-center justify-center gap-2"
     >
@@ -25,18 +21,20 @@
 
 <style>
     #top {
-        transform: rotateZ(0deg);
+        transform: rotate(0deg);
+        transition: transform 0.3s ease-in-out;
     }
 
     #bottom {
         transform: rotateZ(0deg);
+        transition: transform 0.3s ease-in-out;
     }
 
     .toggle-expanded #top {
-        transform: rotateZ(45deg) translateX(3px) translateY(4px);
+        transform: rotate(45deg) translateY(4px) translateX(3px);
     }
 
     .toggle-expanded #bottom {
-        transform: rotateZ(-45deg) translateX(3px) translateY(-4px);
+        transform: rotate(-45deg) translateY(-4px) translateX(3px);
     }
 </style>
