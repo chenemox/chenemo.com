@@ -1,0 +1,29 @@
+---
+import { fetchTags } from '@/lib/post'
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+const allTags = Array.from(await fetchTags())
+---
+
+<BaseLayout title='tags' description='all tags'>
+    <div>
+    {allTags.length === 0 && <p>No tags yet.</p>}
+
+    {
+        allTags.length > 0 && (
+            <div>
+            {allTags.map(([tag, val]) => (
+                    <a
+                        data-astro-prefetch
+                        href={`/tags/${tag}`}
+                        title={`View posts with the tag ${tag}`}
+                        style={`font-size: ${(Math.log(val || 1) + 1) * 1}rem`}
+                        class="inline-block underline-offset-4 underline font-grotesk m-4">
+                        {tag}
+                    </a>
+            ))}
+            </div>
+        )
+    }
+    </div>
+</BaseLayout>

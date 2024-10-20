@@ -1,0 +1,101 @@
+---
+import type { Menu } from '@types'
+
+interface Props {
+  key: number
+  menu: Menu
+}
+
+const { key, menu } = Astro.props
+---
+
+<li class="nav-li relative">
+    {
+        menu.url 
+        ? <a href={menu.url} title={`${menu.name} link`} class="color-header">{menu.name}</a>
+        : <button 
+            class="nav-btn dropdown-btn color-header"
+            data-dropdown={`dropdown${key}`} 
+            aria-haspopup="true" 
+            aria-expanded="false" 
+            aria-label="browse"
+          >
+                <span>{menu.name}</span>
+                <span class="expanded-arrow hidden">
+                    <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
+                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 6s6 4.419 6 6s-6 6-6 6" color="currentColor" />
+                    </svg>
+                </span>
+          </button>
+    }
+
+    {
+        menu.children &&
+        <div id={`dropdown${key}`} class="dropdown">
+            <ul role="menu" class="flex flex-col px-10 py-3 ws-nowrap gap-2 mx-auto rd-lg bg-header">
+                {menu.children.map(submenu => (
+                    <li role="menuitem" class="color-header">
+                        <a class="flex gap-2 py-2 transition-duration-100 transition-ease-in-out" href={submenu.url} aria-label={submenu.name}>{submenu.name}</a>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    }
+
+</li>
+
+<style>
+.dropdown {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    position: absolute;
+    top: 50px;
+    left: -4px;
+    z-index: 1;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.97) translateX(-5px);
+    transition: 0.1s ease-in-out;
+    border-radius: 10px;
+}
+
+.dropdown.active {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1) translateX(5px);
+}
+
+/* .nav-li:hover .dropdown {
+    display: flex;
+} */
+
+@media (max-width: 768px) {
+    .dropdown {
+        display: none;
+        min-width: 100%;
+        border-radius: 5px;
+        position: static;
+        top: 0;
+        left: 0;
+        visibility: visible;
+        opacity: 1;
+        transform: none;
+    }
+
+    .dropdown.active {
+        display: block;
+    }
+
+    .dropdown ul {
+        padding-left: 0.2rem;
+        padding-top: 20px;
+        padding-bottom: 0px;
+        gap: 3px;
+    }
+
+    .dropdown-btn .expanded-arrow {
+        display: inline;
+    }
+}
+</style>

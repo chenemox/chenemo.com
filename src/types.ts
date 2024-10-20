@@ -1,13 +1,19 @@
+interface Author {
+  name: string
+  avatar: string
+}
+
+interface Link {
+  name: string
+  url: string
+  icon?: string
+}
+
 export interface Site {
   url: string
   title: string
   description: string
   author: Author
-}
-
-interface Author {
-  name: string
-  avatar: string
 }
 
 export interface HeadInfo {
@@ -20,8 +26,9 @@ export interface HeadInfo {
   ogType?: string
 }
 
-export interface Link {
+export interface Menu {
   name: string
-  url: string
+  url?: string
   icon?: string
+  children?: Link[]
 }

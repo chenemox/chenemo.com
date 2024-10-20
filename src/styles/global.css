@@ -3,3 +3,12 @@
     src: url('/fonts/AlimamaFangYuanTiVF-Thin.woff2') format('woff2');
     font-display: swap;
 }
+
+
+.title {
+    font-variation-settings: 'wght' 500, 'BEVL' 100;
+}
+
+.content {
+    font-variation-settings: 'wght' 500, 'BEVL' 50;
+}

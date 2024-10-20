@@ -1,0 +1,18 @@
+---
+import Category from '@/components/Category.astro'
+import { fetchCategoryMap } from '@/lib/post'
+import BaseLayout from '@layouts/BaseLayout.astro'
+
+const categoryMap = await fetchCategoryMap()
+const categories = Array.from(categoryMap.keys())
+---
+
+<BaseLayout  title='categories' description='all categories'>
+    <section class="grid sm:grid-cols-2 lg:grid-cols-3 items-center gap-6 w-full">
+    {
+        categories.map((category) => (
+            <Category name={category} posts={categoryMap.get(category)} />
+        ))
+    }
+    </section>
+</BaseLayout>

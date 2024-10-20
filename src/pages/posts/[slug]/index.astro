@@ -1,0 +1,60 @@
+---
+import type { GetStaticPaths } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+import PostLayout from '@/layouts/PostLayout.astro'
+import { fetchCategory, fetchPosts } from '@/lib/post'
+import { formatDate } from '@lib/date'
+import { SITE } from 'config'
+import MDLink from '@components/MDLink.astro'
+import MDImage from '@components/MDImage.astro'
+
+export const getStaticPaths = (async () => {
+  const posts = await fetchPosts()
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  post: CollectionEntry<'posts'>
+}
+
+const { post } = Astro.props
+const { Content, headings } = await post.render()
+
+const categoryEntry = await fetchCategory(post.data.category)
+const categoryName = categoryEntry
+  ? categoryEntry.data.title
+  : post.data.category
+---
+
+<PostLayout post={post}>
+  <div class="w-full relative">
+    <h1 class="title font-fangyuan my-0 text-3xl mb-3">{ post.data.title }</h1>
+    <div class="flex flex-row items-center gap-3 text-zinc-500 dark:text-zinc-400 text-sm mb-4 switch-animation">
+      <div>
+        {SITE.author.name}
+      </div>
+      <i class="px-2">•</i>
+      <div>
+        <a href={`/categories/${post.data.category}`} class="decoration-none">{ categoryName }</a>
+      </div>
+      <i class="px-2">•</i>
+      <div>
+        { formatDate(post.data.createdAt) }
+        { post.data.updatedAt ? <span id="update-time" title={formatDate(post.data.updatedAt)}>(已更新)</span> : ""  }
+      </div>
+    </div>
+
+    <div class="content font-fangyuan font-500 lh-relaxed tracking-wider text-base">
+        <Content components={{ a: MDLink, img: MDImage }} />
+    </div>
+
+    <div>
+      {post.data.tags?.map((tag: string) => (
+        <a class="px-2 py-1 mr-2 mb-2 font-400 decoration-none  inline-block text-[#222831]  bg-[#f7f8fa] dark:text-[#aaa] dark:bg-[#1f2937]" href={`/tags/${tag}`}>{tag}</a>
+      ))}
+    </div>
+  </div>
+</PostLayout>

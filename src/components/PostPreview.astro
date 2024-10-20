@@ -1,0 +1,69 @@
+---
+import { formatDate } from '@lib/date'
+import { fetchCategory } from '@lib/post'
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import { SITE } from 'config'
+
+interface Props {
+  post: CollectionEntry<'posts'>
+}
+
+const { post } = Astro.props
+const categoryEntry = await fetchCategory(post.data.category)
+const categoryName = categoryEntry
+  ? categoryEntry.data.title
+  : post.data.category
+---
+
+<article class="post py-8 border-b border-b-solid border-b-[#8796a513] flex flex-row">
+    <div class="flex flex-col flex-grow">
+        <div class="flex-auto">
+            <h2 class="title font-fangyuan text-lg"><a href={`/posts/${post.slug}`}>{post.data.title}</a></h2>
+            <div class="content mt-4 text-sm overflow-hidden line-clamp-3">
+                {post.data.excerpt}
+            </div>
+        </div>
+        <div class="flex flex-row items-center text-xs mt-3 text-content">
+            <div>
+                {SITE.author.name}
+            </div>
+            <i class="px-3">•</i>
+            <span>
+                <a href={`/categories/${post.data.category}`}>{categoryName}</a>
+            </span>
+            <i class="px-3">•</i>
+            <time datetime={post.data.createdAt.toString()}>{formatDate(post.data.createdAt)}</time>
+        </div>
+    </div>
+    <div class="flex-grow-0 flex-shrink-0 flex-basis-25% pl-4 max-w-25% h-auto">
+        <a href={`/posts/${post.slug}`} class="overflow-hidden w-full h-full rd-md block img-link">
+            {
+                post.data.cover &&
+                <Image src={post.data.cover} alt={post.data.title} class="img" />
+            }
+        </a>
+    </div>
+</article>
+
+<style>
+.post:last-child {
+    border-bottom: 0;
+}
+
+.img-link {
+    box-shadow: 0px 10px 30px -10px rgb(45 55 86 / 20%);
+}
+
+.img {
+    filter: blur(0px);
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    overflow-clip-margin: content-box;
+    overflow: clip;
+    aspect-ratio: 1 / 1;
+}
+</style>
