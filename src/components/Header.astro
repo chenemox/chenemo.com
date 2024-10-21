@@ -31,62 +31,6 @@ import NavLink from './NavLink.astro'
             document.querySelector("#header")?.classList.toggle('header-expanded')
             document.querySelector("#navLinks")?.classList.toggle('expanded') 
         })
-
-        const dropdownBtn = document.querySelectorAll(".dropdown-btn");
-        const dropdown = document.querySelectorAll(".dropdown");
-        const links = document.querySelectorAll(".dropdown a");
-
-        function setAriaExpandedFalse() {
-            dropdownBtn.forEach((btn) => btn.setAttribute("aria-expanded", "false"));
-        }
-
-        function closeDropdownMenu() {
-            dropdown.forEach((drop) => {
-                drop.classList.remove("active");
-                drop.addEventListener("click", (e) => e.stopPropagation());
-            });
-        }
-
-
-        dropdownBtn.forEach((btn) => {
-            const btnBounds = btn.getBoundingClientRect()
-            btn.addEventListener("click", function (e) {
-                const dropdownIndex = e.currentTarget.dataset.dropdown;
-                const dropdownElement = document.getElementById(dropdownIndex);
-                const dropdownBounds = dropdownElement?.getBoundingClientRect()
-
-                const left = btnBounds.width / 2 - dropdownBounds.width / 2 - 8
-
-                dropdownElement?.classList.toggle("active");
-                dropdownElement?.setAttribute("style", `left: ${left}px`)
-                dropdown.forEach((drop) => {
-                    if (drop.id !== btn.dataset["dropdown"]) {
-                        drop.classList.remove("active");
-                    }
-                });
-                e.stopPropagation();
-            });
-        });
-
-        links.forEach((link) =>
-            link.addEventListener("click", () => {
-                closeDropdownMenu();
-                setAriaExpandedFalse();
-            })
-        );
-
-        document.documentElement.addEventListener("click", () => {
-            closeDropdownMenu();
-            setAriaExpandedFalse();
-        });
-
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-                closeDropdownMenu();
-                setAriaExpandedFalse();
-            }
-        });
-
     })
 </script>
 

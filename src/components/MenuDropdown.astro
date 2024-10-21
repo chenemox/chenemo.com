@@ -1,0 +1,138 @@
+---
+import type { Menu } from '@types'
+
+interface Props {
+  menu: Menu
+}
+
+const { menu } = Astro.props
+---
+
+<menu-dropdown>
+    <li class="menu-item flex justify-center relative">
+        <button class="dropdown-btn color-header">
+            <span>{menu.name}</span>
+            <span class="expanded-arrow hidden">
+                <svg class="inline-block" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m9 6l6 6l-6 6" />
+                </svg>
+            </span>
+        </button>
+
+        {
+            menu.children &&
+            <div class="dropdown bg-header">
+                <ul class="flex flex-col px-10 py-3 ws-nowrap mx-auto gap-2 rd-lg ">
+                    {menu.children.map(submenu => (
+                        <li class="color-header">
+                            <a class="flex gap-2 py-2 transition-duration-100 transition-ease-in-out" href={submenu.url} aria-label={submenu.name}>{submenu.name}</a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        }
+    </li>
+</menu-dropdown>
+
+<script>
+
+class MenuDropdown extends HTMLElement {
+
+    closeDropdownMenu() {
+        const allDropdowns = document.querySelectorAll(".dropdown")
+        allDropdowns.forEach((drop) => {
+            drop.classList.remove("active");
+            drop.addEventListener("click", (e) => e.stopPropagation());
+        })
+    }
+
+    connectedCallback() {
+        const btn = this.querySelector(".dropdown-btn")
+        const dropdown = this.querySelector(".dropdown")
+        const links = this.querySelectorAll(".dropdown a")
+
+        const allDropdowns = document.querySelectorAll(".dropdown")
+        btn?.addEventListener('click', function(e) {
+            allDropdowns.forEach((drop) => {
+                drop.classList.remove("active")
+            })
+            dropdown?.classList.toggle("active")
+            e.stopPropagation()
+        })
+
+        links.forEach((link) => {
+            link.addEventListener('click', () => {
+                this.closeDropdownMenu()
+            })
+        })
+
+        document.documentElement.addEventListener('click', () => {
+            this.closeDropdownMenu()
+        })
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === "Escape") {
+                this.closeDropdownMenu()
+            }
+        })
+    }    
+}
+
+customElements.define('menu-dropdown', MenuDropdown)
+
+</script>
+
+<style>
+    .dropdown {
+        display: flex;
+        flex-direction: column;
+        min-width: 200px;
+        position: absolute;
+        top: 52px;
+        z-index: 1;
+        visibility: hidden;
+        opacity: 0;
+        transform: scale(0.97) translateX(-5px);
+        transition: 0.1s ease-in-out;
+        border-radius: 10px;
+    }
+    
+    .dropdown.active {
+        visibility: visible;
+        opacity: 1;
+        transform: scale(1) translateX(0px);
+    }
+    
+    @media (max-width: 768px) {
+        .menu-item {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .dropdown {
+            display: none;
+            min-width: 100%;
+            border-radius: 5px;
+            position: static;
+            padding-left: 10px;
+            visibility: visible;
+            opacity: 1;
+            transform: none;
+        }
+    
+        .dropdown.active {
+            display: block;
+        }
+    
+        .dropdown ul {
+            padding-left: 0.2rem;
+            padding-top: 20px;
+            padding-bottom: 0px;
+            gap: 3px;
+        }
+
+        .dropdown-btn .expanded-arrow {
+            display: inline;
+        }
+    }
+</style>
