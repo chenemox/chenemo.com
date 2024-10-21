@@ -13,7 +13,7 @@ const { key, menu } = Astro.props
 <>
     {
         menu.url
-        ? <li class="relative"><a><a href={menu.url} title={`${menu.name} link`} class="color-header">{menu.name}</a></a></li>
+        ? <li class="relative"><a href={menu.url} title={`${menu.name} link`} class="color-header">{menu.name}</a></li>
         : <MenuDropdown menu={menu} />
     }
 </>

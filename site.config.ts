@@ -21,12 +21,7 @@ const MENUS: Menu[] = [
   },
   {
     name: '专题',
-    // url: '/series',
-    children: [
-      { name: 'Python网站构建', url: '/posts' },
-      { name: 'Rust源码解析', url: '/categories' },
-      { name: 'Golang语言初体验', url: '/tags' },
-    ],
+    url: '/series',
   },
   { name: '朋友', url: '/friends' },
 ]
