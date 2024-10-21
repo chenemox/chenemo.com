@@ -46,6 +46,7 @@ import NavLink from './NavLink.astro'
     }
 
     #navLinks {
+        display: none;
         width: 100%;
         align-items: flex-start;
         padding-left: 24px;
@@ -55,7 +56,8 @@ import NavLink from './NavLink.astro'
     }
 }
 
-.expanded {
+#navLinks.expanded {
+    display: flex;
     opacity: 1;
 }
 </style>

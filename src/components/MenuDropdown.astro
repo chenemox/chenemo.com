@@ -84,7 +84,7 @@ customElements.define('menu-dropdown', MenuDropdown)
 
 <style>
     .dropdown {
-        display: flex;
+        display: none;
         flex-direction: column;
         min-width: 200px;
         position: absolute;
@@ -98,6 +98,7 @@ customElements.define('menu-dropdown', MenuDropdown)
     }
     
     .dropdown.active {
+        display: flex;
         visibility: visible;
         opacity: 1;
         transform: scale(1) translateX(0px);
